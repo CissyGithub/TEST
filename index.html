@@ -3,19 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>简单交互页面</title>
+    <title>计时器示例</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        #timer {
+            font-size: 3em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h1>欢迎来到我的简单交互页面</h1>
-    <p>点击下面的按钮会显示一个提示消息。</p>
+    <h1>简单计时器</h1>
+    <!-- 显示计时的区域 -->
+    <div id="timer">0 秒</div>
+    <!-- 控制按钮 -->
+    <button onclick="startTimer()">开始计时</button>
+    <button onclick="stopTimer()">停止计时</button>
 
-    <!-- 按钮，点击后会触发 JavaScript 函数 -->
-    <button onclick="showMessage()">点击我</button>
-
-    <!-- JavaScript 代码直接嵌入在 HTML 中 -->
     <script>
-        function showMessage() {
-            alert("你点击了按钮，欢迎体验！");
+        let timer; // 保存计时器ID
+        let seconds = 0; // 计时的秒数
+
+        function startTimer() {
+            // 如果计时器已经在运行，就不再重新启动
+            if (!timer) {
+                timer = setInterval(() => {
+                    seconds++;
+                    document.getElementById("timer").textContent = `${seconds} 秒`;
+                }, 1000); // 每秒更新一次
+            }
+        }
+
+        function stopTimer() {
+            clearInterval(timer); // 清除计时器
+            timer = null; // 重置计时器ID
         }
     </script>
 </body>
