@@ -32,15 +32,15 @@
             cursor: pointer;
         }
         .dot {
-            width: 10px;
-            height: 10px;
+            width: 5px;
+            height: 5px;
             background-color: black;
             border-radius: 50%;
             position: absolute;
         }
         .square {
-            width: 50px;
-            height: 50px;
+            width: 10px;
+            height: 10px;
             background-color: red;
             position: absolute;
         }
@@ -118,8 +118,9 @@
         function createRandomDot() {
             const dot = document.createElement("div");
             dot.classList.add("dot");
-            dot.style.top = `${Math.random() * 100}vh`;
-            dot.style.left = `${Math.random() * 100}vw`;
+            // 限制随机位置在80%视口范围内，以便更容易看到
+            dot.style.top = `${Math.random() * 80}vh`;
+            dot.style.left = `${Math.random() * 80}vw`;
             document.body.appendChild(dot);
             dotList.push(dot); // 将生成的黑点加入列表
         }
@@ -128,8 +129,8 @@
         function createSquare() {
             const square = document.createElement("div");
             square.classList.add("square");
-            square.style.top = `${Math.random() * 90}vh`;
-            square.style.left = `${Math.random() * 90}vw`;
+            square.style.top = `${Math.random() * 80}vh`;
+            square.style.left = `${Math.random() * 80}vw`;
             document.body.appendChild(square);
             // 2秒后自动删除正方形
             setTimeout(() => {
