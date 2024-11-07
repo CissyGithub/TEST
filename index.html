@@ -24,6 +24,11 @@
             font-size: 1.5em;
             color: #333;
             margin: 10px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.8); /* 半透明背景 */
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            z-index: 1; /* 保证文字显示在黑点和正方形之上 */
         }
         button {
             padding: 10px 20px;
@@ -37,12 +42,14 @@
             background-color: black;
             border-radius: 50%;
             position: absolute;
+            z-index: 0; /* 确保黑点在文字层之下 */
         }
         .square {
-            width: 10px;
-            height: 10px;
+            width: 7px;
+            height: 7px;
             background-color: red;
             position: absolute;
+            z-index: 0; /* 确保正方形在文字层之下 */
         }
     </style>
 </head>
@@ -63,7 +70,6 @@
     <script>
         let timer; // 保存计时器ID
         let seconds = 0; // 计时的秒数
-        const dotList = []; // 用于跟踪生成的小黑点
 
         // 开始计时功能
         function startTimer() {
@@ -77,10 +83,9 @@
                         createRandomDot();
                     }
 
-                    // 每60秒生成一个红色正方形并删除20个小黑点
+                    // 每60秒生成一个红色正方形
                     if (seconds % 60 === 0) {
                         createSquare();
-                        removeDots(20);
                     }
                 }, 1000); // 每秒更新一次
             }
@@ -97,7 +102,6 @@
             stopTimer(); // 停止计时
             seconds = 0; // 重置秒数
             document.getElementById("timer").textContent = "0 秒";
-            clearDots(); // 清空所有小黑点
         }
 
         // 显示上海时间
@@ -118,11 +122,9 @@
         function createRandomDot() {
             const dot = document.createElement("div");
             dot.classList.add("dot");
-            // 限制随机位置在80%视口范围内，以便更容易看到
             dot.style.top = `${Math.random() * 80}vh`;
             dot.style.left = `${Math.random() * 80}vw`;
             document.body.appendChild(dot);
-            dotList.push(dot); // 将生成的黑点加入列表
         }
 
         // 创建一个随机位置的红色正方形
@@ -132,26 +134,6 @@
             square.style.top = `${Math.random() * 80}vh`;
             square.style.left = `${Math.random() * 80}vw`;
             document.body.appendChild(square);
-            // 2秒后自动删除正方形
-            setTimeout(() => {
-                square.remove();
-            }, 2000);
-        }
-
-        // 删除指定数量的小黑点
-        function removeDots(count) {
-            for (let i = 0; i < count; i++) {
-                const dot = dotList.shift(); // 从数组开头移除一个黑点
-                if (dot) dot.remove(); // 如果黑点存在，则从页面移除
-            }
-        }
-
-        // 清空所有小黑点
-        function clearDots() {
-            while (dotList.length > 0) {
-                const dot = dotList.pop();
-                if (dot) dot.remove();
-            }
         }
     </script>
 </body>
